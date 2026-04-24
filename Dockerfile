@@ -21,4 +21,4 @@ RUN mkdir -p /app/data
 ENV DATABASE_PATH=/app/data/trashbot.db
 
 EXPOSE 3000
-CMD ["node", "src/index.js"]
+CMD ["sh", "-c", "node src/db/migrate.js && node src/index.js"]
