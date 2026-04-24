@@ -1,0 +1,26 @@
+{
+  "name": "trash-duty-bot",
+  "version": "1.0.0",
+  "description": "LINE chatbot that automates weekly trash duty rotation for shared households.",
+  "private": true,
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "migrate": "node src/db/migrate.js",
+    "test": "node scripts/verify-rotation.js"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^9.5.0",
+    "better-sqlite3": "^11.5.0",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "node-cron": "^3.0.3",
+    "pino": "^9.5.0",
+    "pino-pretty": "^11.3.0"
+  }
+}
