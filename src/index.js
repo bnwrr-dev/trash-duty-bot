@@ -33,12 +33,31 @@ app.post('/webhook', lineClient.middleware(), async (req, res) => {
 });
 
 // Error handler for the LINE middleware signature failures.
-app.use((err, _req, res, _next) => {
+app.use((err, req, res, _next) => {
   if (err && err.signatureValidationFailed) {
     logger.warn({ signature: err.signature }, 'invalid LINE signature');
     return res.status(401).send('invalid signature');
   }
-  logger.error({ err: err && err.message }, 'express error');
+  logger.error(
+    {
+      err: {
+        message: err && err.message,
+        stack: err && err.stack,
+        status: err && err.status,
+        type: err && err.constructor && err.constructor.name,
+      },
+      req: {
+        method: req.method,
+        url: req.url,
+        headers: {
+          'content-type': req.headers['content-type'],
+          'x-line-signature': req.headers['x-line-signature'],
+          'user-agent': req.headers['user-agent'],
+        },
+      },
+    },
+    'express error'
+  );
   res.status(500).send('server error');
 });
 
